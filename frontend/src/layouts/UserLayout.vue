@@ -1,0 +1,121 @@
+<template>
+    <!-- modal -->
+    <div 
+        v-if="modal"
+        class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center"
+    >
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow max-w-lg w-full p-5">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl">Créer une todolist</h2>
+                <button
+                @click="modal = false"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            </div>
+            <form @submit:prevent="createTodo" class="mb-0 mt-5">
+                <label class="input_form">
+                    <span>Nom</span>
+                    <input 
+                        type="text" 
+                        v-model.trim="name"
+                        placeholder="ex : Objectifs"
+                        required
+                    >
+                    <span v-if="errors.name" class="text-red-400 mt-2">{{ errors.name }}</span>
+                </label>
+                <input 
+                    type="submit" 
+                    value="Créer la todolist" 
+                    :disabled="btnDisabled"
+                >
+            </form>
+           
+        </div>
+    </div>
+
+    <!-- layout -->
+    <div class="grid grid-cols-12 h-screen">
+        <header class="col-span-2 bg-gray-50 flex flex-col justify-between p-5">
+            <nav>
+                <h1 class="text-xl mb-5">TodolistApp</h1>
+                <p class="text-sm text-gray-500">Navigation</p>
+                <ul class="mb-10">
+                    <li>
+                        <RouterLink to="/dashboard" class="flex items-center my-2 p-2" active-class="active_link">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+                            </svg>
+                            <span class="ml-2">Tableau de bord</span>
+                        </RouterLink>
+                    </li>
+                    <li>
+                        <RouterLink to="/account" class="flex items-center my-2 p-2" active-class="active_link">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                            </svg>
+                            <span class="ml-2">Mon compte</span>
+                        </RouterLink>
+                    </li>
+                </ul>
+                <p class="text-sm text-gray-500">Todolists</p>
+                <ul v-for="todo in todos">
+                    <li><RouterLink to="/todolist/{{ todo.id }}">{{ todo.name }}</RouterLink></li>
+                </ul>
+            </nav>
+            <button 
+                class="flex justify-center items-center gap-2 w-full bg-blue text-white p-2 py-2.5 rounded-md"
+                @click="modal = true"
+            >
+                <span>Créer une todolist</span>
+            </button>
+        </header>
+        <section class="col-span-10 p-5 flex flex-col items-center gap-5">
+            <slot/>
+        </section> 
+    </div>
+</template>
+
+<script setup>
+    import { ref, onMounted, watch } from 'vue'
+    import axios from 'axios'
+    import { RouterLink } from 'vue-router';
+
+    const todos = ref([])
+    const modal = ref(false)
+    const name = ref('')
+    const errors = ref({})
+    const btnDisabled = ref(true)
+
+    watch(name, () => {
+        if(name.value.trim() !== '') {
+            btnDisabled.value = false
+        } else {
+            btnDisabled.value = true
+        }
+    })
+
+    const fetchTodos = async () => {
+        try {
+            // const res = await axios.get('todos')
+            // todos.value = res.data
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    onMounted(() => {
+        fetchTodos()
+    })
+
+    const createTodo = async () => {
+        try {
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+</script>
