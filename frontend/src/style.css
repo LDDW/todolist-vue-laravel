@@ -18,7 +18,7 @@ form {
     @apply block text-sm;
 }
 .input_form > input {
-    @apply block w-full border border-gray-950 rounded-md px-3 py-2 mt-1 text-sm outline-none;
+    @apply block w-full border border-gray-950 rounded-md px-3 py-2 mt-1 text-sm outline-none bg-transparent;
 }
 
 input:-webkit-autofill,

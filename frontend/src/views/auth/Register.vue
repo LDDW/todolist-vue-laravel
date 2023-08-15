@@ -2,7 +2,8 @@
     <AuthLayout>
         <section class="h-screen max-w-md w-full flex flex-col justify-center items-center">
             <h1 class="text-2xl">Inscription</h1>
-            <form @submit.prevent="login" class="w-full">
+            <form @submit.prevent="register" class="w-full">
+                <p v-if="errors.message" class="text-red-900 bg-red-300 p-2 mb-5 rounded-md text-sm">{{ errors.message }}</p>
                 <!-- email -->
                 <label class="input_form">
                     <span>Nom</span>
@@ -63,15 +64,17 @@
 <script setup>
     import AuthLayout from '../../layouts/AuthLayout.vue';
     import { ref, watch } from 'vue';
-    import { RouterLink } from 'vue-router';
+    import { RouterLink, useRouter } from 'vue-router';
+    import axios from 'axios';
 
-    const btnDisabled = ref(true)
-    const errors = ref({})
+    const router = useRouter()
 
     const name = ref('')
     const email = ref('')
     const password = ref('')
     const confirmPassword = ref('')
+    const errors = ref({})
+    const btnDisabled = ref(true)
 
     watch([name, email, password, confirmPassword], () => {
         if(name.value.trim() !== '' && email.value.trim() !== '' && password.value.trim() !== '' && confirmPassword.value.trim() !== '' ) {
@@ -99,6 +102,11 @@
             errors.value.password = 'Veuillez renseigner votre mot de passe';
             return;
         }
+
+        if (password.value.trim().length < 8) {
+            errors.value.password = 'Votre mot de passe doit contenir au moins 8 caractères';
+            return;
+        }
         
         if(confirmPassword.value.trim() === ''){
             errors.value.confirmPassword = 'Veuillez confirmer votre mot de passe';
@@ -111,16 +119,23 @@
         }
 
         try {
-
-            const res = await axios.post('register', {
+            await axios.post('register', {
                 name: name.value,
                 email: email.value,
                 password: password.value,
                 password_confirmation: confirmPassword.value
             })
 
+            router.push({ name: 'Login' });
+
         } catch (error) {
-            console.log(error)
+            if(error.response.status === 422) {
+                for (const key in error.response.data.errors) {
+                    errors.value[key.toLowerCase()] = error.response.data.errors[key][0]
+                }
+            } else if (error.response.status === 500) {
+                errors.value.message = error.response.data.message
+            }
         }
 
     }

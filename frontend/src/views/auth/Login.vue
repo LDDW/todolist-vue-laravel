@@ -3,6 +3,7 @@
         <section class="h-screen max-w-md w-full flex flex-col justify-center items-center">
             <h1 class="text-2xl">Connexion</h1>
             <form @submit.prevent="login" class="w-full">
+                <p v-if="errors.message" class="text-red-900 bg-red-300 p-2 mb-5 rounded-md text-sm">{{ errors.message }}</p>
                 <!-- email -->
                 <label class="input_form">
                     <span>Email</span>
@@ -42,13 +43,15 @@
 <script setup>
     import AuthLayout from '../../layouts/AuthLayout.vue';
     import { ref, watch } from 'vue';
-    import { RouterLink } from 'vue-router';
+    import { RouterLink, useRouter } from 'vue-router';
+    import axios from 'axios';
 
-    const btnDisabled = ref(true)
-    const errors = ref({})
-
+    const router = useRouter()
+    
     const email = ref('')
     const password = ref('')
+    const errors = ref({})
+    const btnDisabled = ref(true)
 
     watch([email, password], () => {
         if(email.value.trim() !== '' && password.value.trim() !== '' ) {
@@ -73,13 +76,25 @@
         }
 
         try {
-            const res = await axios.post('login', {
+            let res = await axios.post('login', {
                 email: email.value,
                 password: password.value
             })
 
+            localStorage.setItem('token', res.data.token);
+            router.push({ name: 'dashboard' })
+
         } catch (error) {
-            console.log(error.response.data)
+            if(error.response.status === 422) {
+                for (const key in error.response.data.errors) {
+                    errors.value[key.toLowerCase()] = error.response.data.errors[key][0]
+                }
+            } else if (error.response.status === 500) {
+                errors.value.message = error.response.data.message
+            } else if (error.response.status === 401) {
+                errors.value.message = error.response.data.message
+            }
+            console.log(error)
         }
 
     }   

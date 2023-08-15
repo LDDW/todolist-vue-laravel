@@ -10,7 +10,7 @@
             <div class="bg-gray-50 shadow p-4 mb-5 rounded-md">
                 <form @submit.prevent="updateUser" class="m-0">
                     <p>Modifier mes informations personnelles</p>
-                    <label class="input_form">
+                    <label class="input_form w-3/4">
                         <span>Nom</span>
                         <input 
                             type="text" 
@@ -20,7 +20,7 @@
                         >
                         <span v-if="errors.name" class="text-red-400 mt-2">{{ errors.name }}</span>
                     </label>
-                    <label class="input_form">
+                    <label class="input_form w-3/4">
                         <span>Email</span>
                         <input 
                             type="email" 
@@ -40,7 +40,7 @@
             <div class="bg-gray-50 shadow p-4 mb-5 rounded-md">
                 <form @submit.prevent="updatePassword" class="m-0">
                     <p>Modifier mon mot de passe</p>
-                    <label class="input_form">
+                    <label class="input_form w-3/4">
                         <span>Mot de passe actuel</span>
                         <input 
                             type="password" 
@@ -50,7 +50,7 @@
                         >
                         <span v-if="errors.old_password" class="text-red-400 mt-2">{{ errors.old_password }}</span>
                     </label>
-                    <label class="input_form">
+                    <label class="input_form w-3/4">
                         <span>Nouveau mot de passe</span>
                         <input 
                             type="password" 
@@ -60,7 +60,7 @@
                         >
                         <span v-if="errors.new_password" class="text-red-400 mt-2">{{ errors.new_password }}</span>
                     </label>
-                    <label class="input_form">
+                    <label class="input_form w-3/4">
                         <span>Confirmez le nouveau mot de passe</span>
                         <input 
                             type="password" 
@@ -103,7 +103,7 @@
 
     const fetchUser = async () => {
         try {
-            const res = await axios.post('/user', {
+            const res = await axios.get('/user', {
                 token: localStorage.getItem('token')
             })
 
