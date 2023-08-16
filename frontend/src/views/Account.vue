@@ -9,15 +9,20 @@
                 <div class="flex items-center justify-between">
                     <h2 class="text-xl">Déconnexion</h2>
                     <button
-                    @click="modal = false"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+                        @click="modal = false"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
                 <p>Êtes vous sur de vouloir supprimer votre compte ?</p>
-                <button @click="deleteUserAccount">Je supprime mon compte</button>
+                <button 
+                    @click="deleteUserAccount"
+                    class="bg-blue text-white rounded-md px-3 py-2 mt-1 text-sm outline-none cursor-pointer disabled:bg-slate-300 transition-all"
+                >
+                    Je supprime mon compte
+                </button>
             </div>
         </div>
         <!-- content of page account -->

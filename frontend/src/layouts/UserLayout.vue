@@ -15,7 +15,7 @@
                 </svg>
             </button>
             </div>
-            <form @submit:prevent="createTodo" class="mb-0 mt-5">
+            <form @submit.prevent="createTodo" class="mb-0 mt-5">
                 <label class="input_form">
                     <span>Nom</span>
                     <input 
@@ -53,7 +53,12 @@
             </button>
             </div>
             <p>Êtes vous sur de vouloir vous déconnecter ?</p>
-            <button @click="logoutUser">Je me déconnecte</button>
+            <button 
+                @click="logoutUser"
+                class="bg-blue text-white rounded-md px-3 py-2 mt-1 text-sm outline-none cursor-pointer disabled:bg-slate-300 transition-all"
+            >
+                Je me déconnecte
+            </button>
         </div>
     </div>
 
@@ -89,7 +94,7 @@
                 </ul>
                 <p class="text-sm text-gray-500">Todolists</p>
                 <ul v-for="todo in todos">
-                    <li><RouterLink to="/todolist/{{ todo.id }}">{{ todo.name }}</RouterLink></li>
+                    <li><RouterLink :to="'/todolist/' + todo.id">{{ todo.title }}</RouterLink></li>
                 </ul>
             </nav>
             <button 
@@ -130,8 +135,9 @@
 
     const fetchTodos = async () => {
         try {
-            // const res = await axios.get('todos')
-            // todos.value = res.data
+            const res = await axios.get('todo')
+            todos.value = res.data.todos
+            console.log(res.data)
         } catch (error) {
             console.log(error)
         }
@@ -153,7 +159,11 @@
 
     const createTodo = async () => {
         try {
-            
+            await axios.post('todo', {
+                name: name.value
+            })
+            fetchTodos();
+            modalNewTodo.value = false
         } catch (error) {
             console.log(error)
         }

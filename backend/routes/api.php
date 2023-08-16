@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TodoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,5 +30,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // AuthController
     Route::post('logout', [AuthController::class, 'logout']);
-    
+
+    // TodoController
+    Route::get('todo', [TodoController::class, 'index']);
+    Route::post('todo', [TodoController::class, 'store']);
+    Route::delete('todo/{id}', [TodoController::class, 'destroy']);
+
 });

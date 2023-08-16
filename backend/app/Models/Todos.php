@@ -10,8 +10,13 @@ class Todos extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'title',
         'todos',
         'user_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
