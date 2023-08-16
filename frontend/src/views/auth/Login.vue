@@ -82,6 +82,7 @@
             })
 
             localStorage.setItem('token', res.data.token);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
             router.push({ name: 'dashboard' })
 
         } catch (error) {

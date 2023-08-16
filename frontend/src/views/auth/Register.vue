@@ -135,6 +135,8 @@
                 }
             } else if (error.response.status === 500) {
                 errors.value.message = error.response.data.message
+            } else {
+                errors.value.message = 'Une erreur est survenue, veuillez réessayer plus tard'
             }
         }
 

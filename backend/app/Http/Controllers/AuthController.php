@@ -74,4 +74,13 @@ class AuthController extends Controller
             'errors' => 'Email ou mot de passe incorrect',
         ], 401);
     }
+
+    public function logout(Request $request):JsonResponse
+    {
+        $request->user()->tokens()->delete();
+
+        return response()->json([
+            'message' => 'Logout successfully',
+        ], 200);
+    }
 }

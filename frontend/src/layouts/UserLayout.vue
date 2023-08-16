@@ -1,14 +1,14 @@
 <template>
-    <!-- modal -->
+    <!-- modal new todolist -->
     <div 
-        v-if="modal"
+        v-if="modalNewTodo"
         class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center"
     >
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow max-w-lg w-full p-5">
             <div class="flex items-center justify-between">
                 <h2 class="text-xl">Créer une todolist</h2>
                 <button
-                @click="modal = false"
+                @click="modalNewTodo = false"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -36,9 +36,30 @@
         </div>
     </div>
 
+    <!-- modal logout -->
+    <div
+        v-if="modalLogout"
+        class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center"
+    >
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow max-w-lg w-full p-5">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl">Déconnexion</h2>
+                <button
+                @click="modalLogout = false"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            </div>
+            <p>Êtes vous sur de vouloir vous déconnecter ?</p>
+            <button @click="logoutUser">Je me déconnecte</button>
+        </div>
+    </div>
+
     <!-- layout -->
     <div class="grid grid-cols-12 h-screen">
-        <header class="col-span-2 bg-gray-50 flex flex-col justify-between p-5">
+        <header class="col-span-2 bg-gray-50 flex flex-col justify-between p-5 max-h-screen">
             <nav>
                 <h1 class="text-xl mb-5">TodolistApp</h1>
                 <p class="text-sm text-gray-500">Navigation</p>
@@ -59,7 +80,7 @@
                             <span class="ml-2">Mon compte</span>
                         </RouterLink>
                     </li>
-                    <li class="flex items-center my-2 p-2 text-red-400 w-full cursor-pointer">
+                    <li class="flex items-center my-2 p-2 text-red-400 w-full cursor-pointer" @click="modalLogout = true">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" />
                         </svg>
@@ -73,24 +94,28 @@
             </nav>
             <button 
                 class="flex justify-center items-center gap-2 w-full bg-blue text-white p-2 py-2.5 rounded-md text-sm"
-                @click="modal = true"
+                @click="modalNewTodo = true"
             >
                 Créer une todolist
             </button>
         </header>
         <section class="col-span-10 p-5 flex flex-col items-center gap-5">
             <slot/>
-        </section> 
+        </section>
     </div>
+    <Footer/>
 </template>
 
 <script setup>
     import { ref, onMounted, watch } from 'vue'
     import axios from 'axios'
-    import { RouterLink } from 'vue-router';
+    import { RouterLink , useRouter } from 'vue-router';
+    import Footer from '../components/Footer.vue';
 
+    const router = useRouter();
     const todos = ref([])
-    const modal = ref(false)
+    const modalNewTodo = ref(false)
+    const modalLogout = ref(false)
     const name = ref('')
     const errors = ref({})
     const btnDisabled = ref(true)
@@ -107,6 +132,16 @@
         try {
             // const res = await axios.get('todos')
             // todos.value = res.data
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const logoutUser = async () => {
+        try {
+            await axios.post('logout')
+            localStorage.removeItem('token')
+            router.push('/login')
         } catch (error) {
             console.log(error)
         }
