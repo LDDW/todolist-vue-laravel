@@ -42,16 +42,31 @@ class TodoController extends Controller
 
     public function show(Request $request,$id):JsonResponse
     {
-        return response()->json();
+        $todo = $request->user()->todos()->where('id', $id)->firstOrFail();
+        return response()->json([
+            'title' => $todo->title,
+            'todos' => json_decode($todo->todos),
+        ]);
     }
 
-    public function update():JsonResponse
+    public function update(Request $request, $id):JsonResponse
     {
-        return response()->json();
+        $request->user()->todos()->where('id', $id)->update([
+            'title' => $request->title,
+            'todos' => json_encode($request->todos),
+        ]);
+
+        return response()->json([
+            'message' => 'Todo updated successfully'
+        ], 200);
     }
 
-    public function destroy():JsonResponse
+    public function destroy(Request $request, $id):JsonResponse
     {
-        return response()->json();
+        $request->user()->todos()->where('id', $id)->delete();
+        
+        return response()->json([
+            'message' => 'Todo deleted successfully'
+        ], 200);
     }
 }

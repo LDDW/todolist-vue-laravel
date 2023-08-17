@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashbaordController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -34,6 +35,11 @@ Route::middleware('auth:sanctum')->group(function () {
     // TodoController
     Route::get('todo', [TodoController::class, 'index']);
     Route::post('todo', [TodoController::class, 'store']);
+    Route::get('todo/{id}', [TodoController::class, 'show']);
+    Route::put('todo/{id}', [TodoController::class, 'update']);
     Route::delete('todo/{id}', [TodoController::class, 'destroy']);
+
+    // DashboardController
+    Route::get('dashboard', [DashbaordController::class, 'index']);
 
 });

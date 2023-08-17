@@ -3,7 +3,7 @@
         <!-- modal delete user account -->
         <div
             v-if="modal"
-            class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center"
+            class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50"
         >
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow max-w-lg w-full p-5">
                 <div class="flex items-center justify-between">

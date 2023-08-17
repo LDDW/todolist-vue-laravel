@@ -2,7 +2,7 @@
     <!-- modal new todolist -->
     <div 
         v-if="modalNewTodo"
-        class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center"
+        class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50"
     >
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow max-w-lg w-full p-5">
             <div class="flex items-center justify-between">
@@ -39,7 +39,7 @@
     <!-- modal logout -->
     <div
         v-if="modalLogout"
-        class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center"
+        class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50"
     >
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow max-w-lg w-full p-5">
             <div class="flex items-center justify-between">
@@ -63,8 +63,9 @@
     </div>
 
     <!-- layout -->
-    <div class="grid grid-cols-12 h-screen">
-        <header class="col-span-2 bg-gray-50 flex flex-col justify-between p-5 max-h-screen">
+    <div class="flex h-screen">
+
+        <header class="w-64 h-full fixed top-0 left-0 bg-gray-50 flex flex-col justify-between p-5 max-h-screen">
             <nav>
                 <h1 class="text-xl mb-5">TodolistApp</h1>
                 <p class="text-sm text-gray-500">Navigation</p>
@@ -94,7 +95,9 @@
                 </ul>
                 <p class="text-sm text-gray-500">Todolists</p>
                 <ul v-for="todo in todos">
-                    <li><RouterLink :to="'/todolist/' + todo.id">{{ todo.title }}</RouterLink></li>
+                    <li>
+                        <RouterLink :to="'/todolist/' + todo.id" active-class="active_link" class="w-full block p-2">{{ todo.title }}</RouterLink>
+                    </li>
                 </ul>
             </nav>
             <button 
@@ -104,11 +107,15 @@
                 Créer une todolist
             </button>
         </header>
-        <section class="col-span-10 p-5 flex flex-col items-center gap-5">
-            <slot/>
-        </section>
+        
+        <div class="pl-64 w-full">
+            <section class="p-5 flex flex-col items-center gap-5 min-h-screen">
+                <slot/>
+            </section>
+            <Footer/>
+        </div>
+        
     </div>
-    <Footer/>
 </template>
 
 <script setup>
