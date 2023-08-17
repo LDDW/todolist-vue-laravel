@@ -14,6 +14,10 @@ class TodoController extends Controller
     {
         $todos = $request->user()->todos()->get();
 
+        foreach ($todos as $todo) {
+            $todo->todos = json_decode($todo->todos);
+        }
+
         return response()->json([
             'todos' => $todos
         ], 200);

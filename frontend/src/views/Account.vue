@@ -16,7 +16,7 @@
                         </svg>
                     </button>
                 </div>
-                <p>Êtes vous sur de vouloir supprimer votre compte ?</p>
+                <p class="my-5">Êtes vous sur de vouloir supprimer votre compte ?</p>
                 <button 
                     @click="deleteUserAccount"
                     class="bg-blue text-white rounded-md px-3 py-2 mt-1 text-sm outline-none cursor-pointer disabled:bg-slate-300 transition-all"
@@ -25,12 +25,13 @@
                 </button>
             </div>
         </div>
+
         <!-- content of page account -->
         <div class="max-w-3xl w-full flex flex-col gap-4">
-            <h1 class="">Mon Compte</h1>
+            <h1 class="text-3xl font-medium">Mon Compte</h1>
             <div class="bg-gray-50 shadow p-4 mb-5 rounded-md">
                 <form @submit.prevent="updateUser" class="m-0">
-                    <p class="mb-5">Modifier mes informations personnelles</p>
+                    <p class="mb-5 text-xl">Modifier mes informations personnelles</p>
                     <p v-if="errors.userMessage" class="text-red-900 bg-red-300 p-2 mb-5 rounded-md text-sm">{{ errors.userMessage }}</p>
                     <p v-if="success.updateUser" class="text-green-900 bg-green-300 p-2 mb-5 rounded-md text-sm">Modifications enregistrées</p>
                     <label class="input_form w-3/4">
@@ -62,7 +63,7 @@
 
             <div class="bg-gray-50 shadow p-4 mb-5 rounded-md">
                 <form @submit.prevent="updatePassword" class="m-0">
-                    <p class="mb-5">Modifier mon mot de passe</p>
+                    <p class="mb-5 text-xl">Modifier mon mot de passe</p>
                     <p v-if="errors.passwordMessage" class="text-red-900 bg-red-300 p-2 mb-5 rounded-md text-sm">{{ errors.passwordMessage }}</p>
                     <p v-if="success.updatePassword" class="text-green-900 bg-green-300 p-2 mb-5 rounded-md text-sm">Modifications enregistrées</p>
                     <label class="input_form w-3/4">
@@ -103,7 +104,7 @@
             </div>
 
             <div class="bg-gray-50 shadow p-4 mb-5 rounded-md">
-                <p>Supprimer mon compte</p>
+                <p class="mb-5 text-xl">Supprimer mon compte</p>
                 <button 
                     @click="modal = true"
                     class="bg-blue text-white rounded-md px-3 py-2 mt-1 text-sm outline-none cursor-pointer disabled:bg-slate-300 transition-all"

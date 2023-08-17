@@ -32,7 +32,6 @@
                     :disabled="btnDisabled"
                 >
             </form>
-           
         </div>
     </div>
 
@@ -96,7 +95,7 @@
                 <p class="text-sm text-gray-500">Todolists</p>
                 <ul v-for="todo in todos">
                     <li>
-                        <RouterLink :to="'/todolist/' + todo.id" active-class="active_link" class="w-full block p-2">{{ todo.title }}</RouterLink>
+                        <RouterLink :to="'/todolist/' + todo.id" active-class="active_link" class="w-full block my-2 p-2 truncate">{{ todo.title }}</RouterLink>
                     </li>
                 </ul>
             </nav>
@@ -109,7 +108,7 @@
         </header>
         
         <div class="pl-64 w-full">
-            <section class="p-5 flex flex-col items-center gap-5 min-h-screen">
+            <section class="p-10 flex flex-col gap-5 min-h-screen">
                 <slot/>
             </section>
             <Footer/>

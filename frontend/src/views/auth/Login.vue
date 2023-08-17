@@ -31,6 +31,7 @@
                     type="submit" 
                     value="Se connecter"
                     :disabled="btnDisabled"
+                    class="w-full"
                 />
             </form>
 

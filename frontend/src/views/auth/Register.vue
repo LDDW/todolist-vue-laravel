@@ -52,6 +52,7 @@
                     type="submit" 
                     value="S'inscrire"
                     :disabled="btnDisabled"
+                    class="w-full"
                 />
             </form>
 
