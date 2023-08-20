@@ -42,4 +42,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // DashboardController
     Route::get('dashboard', [DashbaordController::class, 'index']);
 
+    // email verify controller
+    Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
+    Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
+
 });

@@ -51,7 +51,7 @@
                 </svg>
             </button>
             </div>
-            <p>Êtes vous sur de vouloir vous déconnecter ?</p>
+            <p class="my-5">Êtes vous sur de vouloir vous déconnecter ?</p>
             <button 
                 @click="logoutUser"
                 class="bg-blue text-white rounded-md px-3 py-2 mt-1 text-sm outline-none cursor-pointer disabled:bg-slate-300 transition-all"

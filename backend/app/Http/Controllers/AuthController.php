@@ -7,7 +7,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log; 
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -29,11 +29,13 @@ class AuthController extends Controller
         }
 
         try {
+
             User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-            ]);
+            ])->sendEmailVerificationNotification();
+
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Failed to create user',
