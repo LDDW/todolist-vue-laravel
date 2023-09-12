@@ -56,7 +56,7 @@
                 />
             </form>
 
-            <p class="text-sm">Vous avez un compte ? <RouterLink to="login" class="underline">Connexion</RouterLink></p>
+            <p class="text-sm">Vous avez un compte ? <RouterLink to="/" class="underline">Connexion</RouterLink></p>
 
         </section>
     </AuthLayout>
